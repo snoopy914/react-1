@@ -2,6 +2,35 @@
 
 # 201930413 박찬우
 ## 6주차 250410
+
+📌 단계별 설명
+1. handleClick 함수 정의
+Square 함수 내부에 클릭 이벤트를 처리할 handleClick 함수를 먼저 선언:
+
+javascript
+복사
+편집
+function handleClick() {
+  console.log("clicked!");
+}
+2. JSX 버튼에 이벤트 연결
+JSX에서 onClick prop을 버튼에 추가해서 클릭 이벤트 연결:
+
+javascript
+복사
+편집
+function Square() {
+  function handleClick() {
+    console.log("clicked!");
+  }
+
+  return (
+    <button className="square" onClick={handleClick}>
+      {/* 버튼 내용 */}
+    </button>
+  );
+}
+
 props를 통해 데이터 전달하기 요약
 Component 재사용과 중복 제거
 
@@ -27,7 +56,35 @@ App에서 호출하는 component를 Square에서 Board로 변경.
 
 props를 통해 부모 component(Board)에서 자식 component(Square)로 값을 전달.
 
-데이터를 전달하는 방향은 항상 부모 → 자식.
+데이터를 전달하는 방향은 항상 부모 → 자식.1. 기본 개념
+Square 컴포넌트가 value라는 prop을 받을 수 있도록 구조를 변경함.
+
+javascript
+복사
+편집
+function Square({ value }) {
+  return <button className="square">1</button>;
+}
+현재는 value 값을 받아도 실제 버튼에는 1이 고정되어 있어 의미가 없음.
+
+2. 문자열 vs JavaScript 변수
+"value"처럼 문자열로 쓰면 그냥 글자 그대로 "value"가 출력됨.
+
+실제 JavaScript 변수로서 value를 사용하려면 중괄호 {}를 써야 함.
+
+javascript
+복사
+편집
+function Square({ value }) {
+  return <button className="square">{ value }</button>;
+}
+3. JSX에서 표현식 사용
+JSX는 JavaScript가 아니므로 표현식을 사용할 땐 반드시 {}로 감싸야 함.
+
+위 예시처럼 <button>{ value }</button>로 작성해야 동적으로 렌더링 가능.
+
+4. 값 전달이 안 되면 아무것도 표시되지 않음
+Board 컴포넌트에서 value prop을 실제로 전달하지 않으면 버튼에는 아무것도 표시되지 않음.
 
 ## 5주차 250403
 8. 이벤트에 응답하기
