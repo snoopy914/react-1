@@ -2,7 +2,8 @@
 
 # 201930413 박찬우
 ## 6주차 250410
-
+const [ foo, setFoo ] = useState(null)
+const [ value, setValue ] = useState(null)
 📌 단계별 설명
 1. handleClick 함수 정의
 Square 함수 내부에 클릭 이벤트를 처리할 handleClick 함수를 먼저 선언:
