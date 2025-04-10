@@ -1,4 +1,34 @@
+
+
 # 201930413 박찬우
+## 6주차 250410
+props를 통해 데이터 전달하기 요약
+Component 재사용과 중복 제거
+
+React의 component architecture를 활용해 재사용 가능한 component를 만들고, 중복된 코드를 제거함.
+
+Component 구성 단계
+
+Board component를 만들고, Square component의 내용을 복사.
+
+Square component에서 button 하나만 남기고 나머지는 제거.
+
+Board component의 button을 Square component로 교체.
+
+App에서 호출하는 component를 Square에서 Board로 변경.
+
+출력이 정상적인지 확인.
+
+문제 인식
+
+현재는 숫자 출력이 1만 반복됨. 즉, 각 Square가 고유 상태를 갖고 있지 않음.
+
+문제 해결: props 도입
+
+props를 통해 부모 component(Board)에서 자식 component(Square)로 값을 전달.
+
+데이터를 전달하는 방향은 항상 부모 → 자식.
+
 ## 5주차 250403
 8. 이벤트에 응답하기
 - component 내부에 event handler 함수를 선언하면 event에 응답할 수 있습니다.
