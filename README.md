@@ -1,6 +1,187 @@
-
+![image](https://github.com/user-attachments/assets/d08287ce-dc2b-4bcb-be17-c26d35095853)
 
 # 201930413 박찬우
+### 7주차 250417
+
+animals.slice(2) -> end point가 없다.
+마지막으로 보드 컴포넌트 내부에 handleClick 함수를 정의하여, 보드의 state를 담고 있는 squares 배열로 만드시오
+State 포인팅하기 - 3
+
+다음으로 handleClick()이 저장해야 합니다.
+
+Square의 onSquareClick prop에 아까 같이 JSX에서 직접 handleClick()으로 설정할 수도 있지
+만, 이 방법은 작동하지 않습니다.
+
+<Square value={squares[i]} onSquareClick={handleClick(i)} />
+
+이 이유는 다음과 같습니다.
+
+handleClick() 호출은 Board 컴포넌트 렌더링의 일부가 됩니다.
+
+handleClick()은 setSquares를 호출하며, Board 컴포넌트의 state를 변경하기 때문에 Board 컴포넌트 자체가 다시 렌더링 됩니다.
+
+하지만 이 과정에서 handleClick()은 다시 실행되기 때문에 무한 루프에 빠지게 됩니다.
+
+Too many re-renders. React limits the number of renders to prevent an infinite loop.
+
+📌 핵심 요점 정리
+문제 인식
+
+9개의 Square 각각에 대해 함수 이름을 따로 정하는 건 비효율적이다.
+
+해결 방안
+
+JSX에서 화살표 함수 ( ) => handleClick(0)을 사용해 간단하게 처리.
+
+jsx
+복사
+편집
+<Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+화살표 함수 개념
+
+() => handleClick(0)은 handleClick(0)을 호출하는 익명 함수를 생성하는 것.
+
+즉, Square가 클릭되었을 때 해당 함수가 실행됨.
+
+⚠️ 주의사항
+
+handleClick(0)을 직접 넘기면 즉시 실행되기 때문에, 반드시 함수로 감싸서 넘겨야 클릭 시점에 실행됨.
+
+🧠 추가 팁
+만약 9개의 Square를 반복문으로 처리한다면 아래처럼 만들 수 있어요:
+
+jsx
+복사
+편집
+{squares.map((value, idx) => (
+  <Square key={idx} value={value} onSquareClick={() => handleClick(idx)} />
+))}
+📌 핵심 정리
+부모 컴포넌트에서 상태 관리
+
+Board가 모든 state를 관리하며,
+
+각 Square는 props를 통해 값을 전달받습니다.
+
+자식 → 부모로 이벤트 전달
+
+Square가 클릭되면 → Square 컴포넌트는 부모인 Board에게 state 업데이트 요청을 보냅니다.
+
+자동 리렌더링
+
+Board의 state가 변경되면,
+
+Board 자신과 모든 자식 Square 컴포넌트가 자동으로 다시 렌더링됩니다.
+
+일관된 상태 관리
+
+Board가 모든 Square의 상태를 통합해서 관리하므로,
+
+게임의 승자 판별 등 복잡한 로직도 부모 컴포넌트에서 쉽게 처리할 수 있습니다.
+
+🧠 쉬운 비유
+Square는 버튼처럼 단순한 입력기.
+
+Board는 두뇌 역할로 상태를 기억하고 판단합니다.
+
+그래서 "버튼은 누르면 끝", 판단은 "Board가" 하게 설계된 거예요.
+🎯 클릭 후 상태 변화 흐름 (왼쪽 위 사각형 클릭 시)
+✅ 1. Square의 클릭 이벤트 처리
+Square는 onClick prop으로 전달받은 함수를 실행함.
+
+이 함수는 Board에서 onSquareClick이라는 prop으로 전달한 함수.
+
+이 함수 내부에서 handleClick(0)을 실행함 → 0번 인덱스 클릭
+
+✅ 2. handleClick(0)의 역할
+squares[0]을 null에서 'X'로 업데이트.
+
+즉, 첫 번째 칸에 X를 표시하도록 state를 변경함.
+
+✅ 3. 상태 업데이트에 따른 리렌더링
+Board의 state가 변경됨 → React는 자동으로 Board와 그 자식들(Square)을 리렌더링.
+
+이에 따라 value={squares[0]}이 'X'로 변경됨.
+
+✅ 4. 최종 렌더 결과
+왼쪽 위 사각형에는 'X'가 보이게 됨.
+
+사용자는 클릭 → X가 나타나는 흐름을 확인.
+
+📌 정리 요약
+
+단계	설명
+1	Square가 클릭됨 (0번 인덱스)
+2	handleClick(0) 호출로 squares[0] = 'X' 업데이트
+3	state 업데이트로 컴포넌트 자동 리렌더
+4	Square의 value가 'X'로 변경되어 보이게 됨
+
+🔹 불변성이 왜 중요할까요?
+배열을 직접 수정하는 것 대신 slice() 등으로 새로운 배열을 만드는 방식을 권장합니다.
+
+불변성과 불변성을 지키는 이유를 이해하는 것이 중요하다고 강조합니다.
+
+🔹 데이터 변경 방식 2가지
+직접 변경 (Mutate):
+
+기존 데이터를 직접 수정함.
+
+예시:
+
+javascript
+복사
+편집
+const squares = [null, null, ..., null];
+squares[0] = 'X';
+원래 배열 자체가 바뀜 → 부작용 발생 가능
+
+복사 후 변경 (Immutable 방식):
+
+기존 데이터를 건드리지 않고 복사본을 만들어 수정함.
+
+예시:
+
+javascript
+복사
+편집
+const nextSquares = [...squares];  // 또는 slice()
+nextSquares[0] = 'X';
+원본은 그대로 유지 → 예측 가능성, 디버깅 용이성, React 리렌더링 최적화에 도움
+
+🔹 결론
+불변성을 유지하면 상태 변화 감지 및 리렌더링 처리가 쉬워지고, 코드의 안정성과 예측 가능성이 높아집니다.
+
+특히 React 개발 시 핵심 개념으로 자리 잡고 있습니다.
+🔹 왜 불변성이 중요한가요? (추가 이유)
+결과는 같아도, 원본 데이터를 직접 변형하지 않음으로써 여러 이점을 얻을 수 있음
+
+🔹 구체적인 이점들
+복잡한 기능 구현이 쉬워짐
+
+예: 상태 변경 이력을 저장하고, 이전 상태로 되돌리는 기능(Undo/Redo, “돌아가기” 등)
+
+시간 여행(Time Travel) 기능이 가능해짐
+
+게임의 진행 과정을 기록 → 이전 상태로 “되감기”
+
+React에서 Redux DevTools도 이 원리를 활용함
+
+특정 작업의 최소화/재실행 기능
+
+이는 단순 게임에 국한되지 않고 일반 앱에도 자주 사용됨 (예: 메모장 Ctrl+Z)
+
+초기화 및 재사용 용이
+
+직접 변경을 피하면 이전 데이터를 그대로 보관할 수 있어
+→ 나중에 재사용하거나 초기 상태로 쉽게 복원 가능
+
+✅ 요약 정리
+불변성을 유지하면 상태 이력 추적, 디버깅, 롤백, 리렌더링 최적화, 재사용 등 다양한 이점이 있음
+
+특히 상태 기반 UI 프레임워크(React 등)에서는 거의 기본 철학처럼 사용됨
+
+필요하다면 이 두 슬라이드 내용을 하나로 정리해서 학습용 요약본이나 발표 스크립트 형태로 정리해줄게!
+
 ## 6주차 250410
 const [ foo, setFoo ] = useState(null)
 const [ value, setValue ] = useState(null)
