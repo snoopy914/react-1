@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/d08287ce-dc2b-4bcb-be17-c26d35095853)
+
 
 # 201930413 박찬우
 ### 7주차 250417
