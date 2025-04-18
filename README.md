@@ -105,7 +105,42 @@ onPlay(nextSquares);
 상태 관리는 전부 Game 컴포넌트에서
 
 Board는 props로만 상태를 받아 렌더링
+🔹 과거 움직임 보여주기 – 핵심 요약
+✅ 기본 개념
+이제 history 배열을 이용해서 과거 플레이 기록을 보여줄 수 있음
 
+<button>과 같은 엘리먼트는 일반 JS 객체 → 이를 React 엘리먼트 배열로 변환 필요
+
+✅ React에서 다수 엘리먼트 렌더링 방법
+배열을 map()으로 돌려서 React 엘리먼트로 변환
+예시:
+
+js
+복사
+편집
+[1, 2, 3].map((x) => x * 2); // 결과: [2, 4, 6]
+🛠 구현을 위한 Step-by-Step 요약
+history 배열의 각 항목마다 버튼을 생성
+
+React 엘리먼트 배열로 만들어 렌더링
+
+각 버튼은 과거 특정 턴으로 '점프'하는 기능 수행
+
+Game 컴포넌트에서 history.map()을 사용하여 구현
+
+즉, map()을 활용해 아래와 같은 구조로 만들게 될 거야:
+
+jsx
+복사
+편집
+const moves = history.map((squares, move) => {
+  const description = move ? `Go to move #${move}` : 'Go to game start';
+  return (
+    <li key={move}>
+      <button onClick={() => jumpTo(move)}>{description}</button>
+    </li>
+  );
+});
 
 ### 7주차 250417
 
