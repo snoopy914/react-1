@@ -1,6 +1,112 @@
 
 
 # 201930413 박찬우
+### 7주차 보강
+🔹 한 번 더 state 끌어올리기 – 핵심 요약
+Game 컴포넌트를 새로 만들고 export default로 지정
+
+Game 안에서 Board 컴포넌트를 렌더링
+
+한 파일엔 export default가 하나만 있어야 하므로 Board에서는 제거
+
+index.js에서 최상위 컴포넌트로 Game을 사용하도록 지정
+
+Game 컴포넌트에 div를 추가하여 추후 게임 정보 공간 확보
+
+⚠️ 주의사항
+index.js가 아니라 App에서 불러오고 있음
+
+최상위 컴포넌트는 항상 최상단에 선언
+
+컴포넌트 이름과 파일 이름을 일치시키면 관리에 좋음
+
+📌 코드 예시
+jsx
+복사
+편집
+function Board() {
+  // ...
+}
+
+export default function Game() {
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board />
+      </div>
+      <div className="game-info">
+        <ol>{/*TODO*/}</ol>
+      </div>
+    </div>
+  );
+}
+
+🔹 한 번 더 state 끌어올리기 – Part 2
+✅ 6. Game 컴포넌트에 state 추가
+xIsNext : 다음 차례가 누구인지 (true면 X, false면 O)
+
+history : 각 턴의 squares 상태를 기록하는 배열
+
+jsx
+복사
+편집
+const [xIsNext, setXIsNext] = useState(true);
+const [history, setHistory] = useState([Array(9).fill(null)]);
+✅ 7. 현재 게임 상태 (squares) 얻기
+history에서 마지막 값을 꺼내 currentSquares로 사용
+
+렌더링 시 현재 상태만 필요하므로, 마지막 요소만 참조
+
+jsx
+복사
+편집
+const currentSquares = history[history.length - 1];
+✅ 8. 계산만으로도 가능한 정보는 useState 불필요
+currentSquares는 history에서 계산할 수 있으므로 따로 state로 관리하지 않아도 됨
+🔹 한 번 더 state 끌어올리기 – Part 3
+✅ 11. Board에 필요한 정보는 모두 props로 전달
+Board 컴포넌트는 다음 3가지 props를 받도록 수정:
+
+xIsNext (누구 차례인지)
+
+squares (현재 게임 상태)
+
+onPlay (클릭 시 실행할 함수)
+
+✅ onPlay는 클릭된 후 업데이트된 squares를 Game으로 전달하기 위한 함수
+
+✅ 12. Board 내부에서 useState 제거
+상태는 Game에서 관리하므로, Board에서는 상태 정의(useState) 삭제
+
+js
+복사
+편집
+function Board({ xIsNext, squares, onPlay }) {
+  function handleClick(i) {
+    // ...
+  }
+}
+✅ 13. 클릭 시 처리 로직 변경
+setSquares, setXIsNext 등 직접 상태 변경 로직은 제거하고,
+
+onPlay(nextSquares)로 Game에 알리도록 처리
+
+js
+복사
+편집
+if (xIsNext) {
+  nextSquares[i] = "X";
+} else {
+  nextSquares[i] = "O";
+}
+onPlay(nextSquares);
+📌 핵심 요약
+
+상태 관리는 전부 Game 컴포넌트에서
+
+Board는 props로만 상태를 받아 렌더링
+
+
 ### 7주차 250417
 
 animals.slice(2) -> end point가 없다.
