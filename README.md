@@ -180,6 +180,27 @@ const moves = history.map((squares, move) => {
   );
 });
 
+Step 1: UI를 컴포넌트 계층으로 쪼개기
+FilterableProductTable (회색)
+
+예시 전체를 포함하는 최상위 컴포넌트입니다.
+
+SearchBar (파란색)
+
+사용자의 입력을 받는 입력창입니다.
+
+ProductTable (라벤더색)
+
+데이터를 리스트 형태로 보여주고, 사용자 입력(SearchBar)을 기반으로 필터링합니다.
+
+ProductCategoryRow (초록색)
+
+각 카테고리의 헤더(예: Fruits, Vegetables)를 보여줍니다.
+
+ProductRow (노란색)
+
+각 개별 제품 항목을 보여주는 행(예: Apple, Pumpkin 등)입니다.
+
 ### 7주차 250417
 
 animals.slice(2) -> end point가 없다.
