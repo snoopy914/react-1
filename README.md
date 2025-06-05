@@ -1,4 +1,4 @@
-<img width="556" alt="image" src="https://github.com/user-attachments/assets/69907586-b5a7-40ee-b681-8eb3415f6030" />
+
 # 201930413 박찬우
 ### 14주차
 GitHub Pages 배포 요약
@@ -13,7 +13,7 @@ GitHub 저장소에 Push
 GitHub 페이지 설정
 
 GitHub 저장소 → Settings → Pages로 이동
-
+<img width="556" alt="image" src="https://github.com/user-attachments/assets/69907586-b5a7-40ee-b681-8eb3415f6030" />
 Source 항목에서 None 대신 → Deploy from a branch
 
 Branch 선택에서 main (또는 master) 선택
