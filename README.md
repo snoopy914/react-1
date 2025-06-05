@@ -1,5 +1,51 @@
 
 # 201930413 박찬우
+### 14주차
+GitHub Pages 배포 요약
+프로젝트 생성 및 README.md 수정
+
+프로젝트를 만들고 README.md를 간단히 작성합니다.
+
+GitHub 저장소에 Push
+
+저장소는 반드시 public으로 설정해야 GitHub Pages 사용 가능.
+
+GitHub 페이지 설정
+
+GitHub 저장소 → Settings → Pages로 이동
+
+Source 항목에서 None 대신 → Deploy from a branch
+
+Branch 선택에서 main (또는 master) 선택
+
+저장(Save) 클릭
+
+접속 확인
+
+약 1~2분 후 브라우저에서
+
+php-template
+복사
+편집
+https://<GitHubID>.github.io/<Repo-name>
+으로 접속하면 배포된 페이지 확인 가능
+
+⚠️ 주의사항
+초기엔 README.md만 보여질 수 있음
+
+반드시 build한 파일 (index.html 등)이 루트에 있어야 제대로 된 웹페이지로 동작
+
+👇 지금 상황에서 해야 할 것 정리
+npm run build
+
+build 폴더 안의 파일들 → snoopy914.github.io 저장소 루트로 복사
+
+git add . && git commit -m "React 앱 정적 파일 배포"
+
+git push origin main --force (또는 git pull 후 push)
+
+
+![Uploading image.png…]()
 
 ### 13주차 
 
